@@ -1,0 +1,49 @@
+<?php $this->render('common/header'); ?>
+    <div class="page-header">
+        <h1>Agenda - TreinaWeb Cursos</h1>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <a href="<?=url()->route('cadastro.index')?>" class="btn btn-success">
+                Cadastrar Pessoa
+            </a>
+
+        </div>
+    </div>
+
+    <?php if(session()->has('_sucesso')): ?>
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <?=session()->getAndRemove('_sucesso');?>
+        </div>
+    <?php endif;  ?>
+    <?php if(session()->has('_erro')): ?>
+        <div class="alert alert-warning" role="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <?=session()->getAndRemove('_erro');?>
+        </div>
+    <?php endif;  ?>  
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            Selecione uma pessoa:
+            <select id="pessoas" class="form-control">
+                <option value="0">Selecione...</option>
+                <?php foreach ($pessoas as $pessoa): ?>
+                <option value="<?=$pessoa->id?>"><?=$pessoa->nome?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#pessoas').change(function(){
+                document.location.href = '<?=url()->route('eventos.index', ['pessoa' => '']);?>' + $(this).val();
+            });
+        });
+    </script>
+
+<?php $this->render('common/footer'); ?>
